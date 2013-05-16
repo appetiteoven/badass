@@ -1,9 +1,9 @@
 function Install-BadAss
 {
-    	$moduleName = "BadAss"
-    	$downloadurl = "https://raw.github.com/appetiteoven/$moduleName/master/$($moduleName).psm1"
+    $moduleName = "BadAss"
+    $downloadurl = "https://raw.github.com/appetiteoven/$moduleName/master/$($moduleName).psm1"
     	
-    	$UserModulePath = Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules
+    $UserModulePath = Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules
     		
 	New-Item ($UserModulePath + "\$($moduleName)\") -ItemType Directory -Force | out-null
 	
@@ -16,7 +16,7 @@ function Install-BadAss
 	
 	$client.DownloadFile($downloadurl, $savepath)
 	
-	Import-Module -Name $UserModulePath\$moduleName
+	Import-Module -Name $UserModulePath\$moduleName -Force 
 	
 	Write-Host "$($moduleName) is installed and ready to use. You bad ass you." -Foreground Green
 
