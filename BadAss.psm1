@@ -88,7 +88,7 @@ function Update-BadAss
 #load functions
 $global:BadAssScripts | ? {$_ -ne "Microsoft.PowerShell_profile.ps1"} | foreach { . "$env:badassScriptsLocation$_" }
 
-Write-Host "Good day sir. You are a badass. Welcome to BadAss v1.0 - $(get-date) `n" -ForegroundColor Cyan
+Write-Host "`nWelcome to BadAss v1.0 - $(get-date) `nGood day sir. You are a badass.`n " -ForegroundColor Cyan
 
 Set-ConsoleSize -Resize Wide
 
