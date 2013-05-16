@@ -13,30 +13,29 @@ $global:BadAssScripts  = @("Set-Clipboard.ps1",
                            "Set-ConsoleSize.ps1",
                            "Microsoft.PowerShell_profile.ps1")
 #badass module location
-$env:badassLocation =  "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules)\BadAss\"
-$env:badassScriptsLocation =  "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules)\BadAss\Scripts\"
+$env:badassLocation 		=  "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules)\BadAss\"
+$env:badassScriptsLocation 	=  "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules)\BadAss\Scripts\"
 
+#where to put the profile
+$psmodulepath = "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell)\"
 
 if (-not (Test-Path $env:badassLocation))
 {
 	New-Item ($env:badassLocation) -ItemType Directory -Force | out-null
 }
 
-#where to put the profile
-$psmodulepath = "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell)\"
-
 function Update-BadAss
 {
     process
     {
-    		#need to check if local version is latest than most recent commit
-    		#need to store last commit 
+		#need to check if local version is latest than most recent commit
+		#need to store last commit 
     	
 	    foreach($script in $global:BadAssScripts)
 	    {
-		    Write-Host "Getting the latest version of $($script)" -ForegroundColor Yellow
+		    Write-Host "Getting the latest version of $($script)" -ForegroundColor Green
 		
-		    #download url #"https://github.com/appetiteoven/spse/Scripts/Set-Clipboard.ps1"
+		    #download url #"https://github.com/appetiteoven/badass/Scripts/Set-Clipboard.ps1"
 		    $downloadUrl = "$($env:badassScriptPath)$($script)"
 		
 		    #output location for module
@@ -55,8 +54,6 @@ function Update-BadAss
 	           	$_ 
 	        }
 	    }
-		
-		#update the module
 		try   
 		{
 		    #output location for module
@@ -78,7 +75,7 @@ function Update-BadAss
 	    $profilepath = "$($env:badassScriptsLocation)Microsoft.PowerShell_profile.ps1"
 	    Copy-Item $profilepath -Destination $psmodulepath
 
-        write-host "Updating user profile `n $profilepath" -ForegroundColor Yellow
+        write-host "Updating user profile `n $profilepath" -ForegroundColor Green
     }
 
 }
@@ -97,13 +94,6 @@ function prompt
     Write-Host ("badass " + $(get-location) + ">") -nonewline -foregroundcolor white
     return " "
 }
-
-
-#Set-Clipboard "A BADASS! Indeed..."
-
-#write-host "Check yo clipboard son."
-
-#iex notepad
 
 
 
