@@ -30,6 +30,10 @@ function Update-BadAss
 {	
     process
     {
+		if (-not (Test-Path $env:badassScriptsLocation ))
+		{
+			New-Item ($env:badassScriptsLocation ) -ItemType Directory -Force | out-null
+		}
 		#need to check if local version is latest than most recent commit
 		#need to store last commit 
     	
@@ -98,7 +102,7 @@ function Update-BadAss
 #if we dont have the scripts folder, we need to update since its the first install / run
 Write-Verbose "Looking if the scripts path exists... (first run) $env:badassScriptsLocation"
 
-if(Test-Path $env:badassScriptsLocation -eq $false)
+if (-not (Test-Path $env:badassScriptsLocation ))
 {
 	Write-Host "First run. Updating... $env:badassScriptsLocation"
 	Update-BadAss -Verbose
