@@ -84,7 +84,10 @@ function Update-BadAss
 	 	Write-Host "Reloading badass profile" -ForegroundColor Green
 		
 		#reload badass
-		Import-Module -Name $env:badassLocation -Force 
+		#where to put the profile
+		$badasspsmodulepath = "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell)\BadAss"
+
+		Import-Module -Name $badasspsmodulepath -Force 
 	}
 
 }
