@@ -39,10 +39,12 @@ function Update-BadAss
 		
 		    #download url #"https://github.com/appetiteoven/badass/Scripts/Set-Clipboard.ps1"
 		    $downloadUrl = "$($env:badassScriptPath)$($script)"
-		
+			
 		    #output location for module
 		    #C:\Users\sean\Documents\WindowsPowerShell\Modules\BadAssProfile
 		    $destination = "$($env:badassScriptsLocation)$($script)"
+			
+		    Write-Verbose " `tfrom url $downloadUrl `n`t to $destination"
 		
             try   
 			{
@@ -95,8 +97,10 @@ function Update-BadAss
 
 #if we dont have the scripts folder, we need to update since its the first install / run
 Write-Verbose "Looking if the scripts path exists... (first run) $env:badassScriptsLocation"
-if(Test-Path $env:badassScriptsLocation)
+
+if(Test-Path $env:badassScriptsLocation -eq $false)
 {
+	Write-Verbose "First run. Updating... $env:badassScriptsLocation"
 	Update-BadAss -Verbose
 }
 
