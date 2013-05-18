@@ -2,6 +2,8 @@ badass
 ======
 a very nice windows powershell profile
 
+version v1.0
+
 features
 ========
 
