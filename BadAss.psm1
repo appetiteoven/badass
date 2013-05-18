@@ -85,8 +85,7 @@ function Update-BadAss
 		
 		#reload badass
 		#where to put the profile
-		$badasspsmodulepath = "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell)\BadAss"
-
+		$badasspsmodulepath = "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell)\Modules\BadAss"
 		Import-Module -Name $badasspsmodulepath -Force 
 	}
 
