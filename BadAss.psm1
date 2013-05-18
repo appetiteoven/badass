@@ -27,7 +27,7 @@ if (-not (Test-Path $env:badassLocation))
 }
 
 function Update-BadAss
-{
+{	
     process
     {
 		#need to check if local version is latest than most recent commit
@@ -44,7 +44,7 @@ function Update-BadAss
 		    #C:\Users\sean\Documents\WindowsPowerShell\Modules\BadAssProfile
 		    $destination = "$($env:badassScriptsLocation)$($script)"
 			
-		    Write-Verbose " `tfrom url $downloadUrl `n`t to $destination"
+		    Write-Host " `tfrom url $downloadUrl `n`t to $destination"
 		
             try   
 			{
@@ -64,7 +64,7 @@ function Update-BadAss
 		    #C:\Users\sean\Documents\WindowsPowerShell\Modules\BadAssProfile
 		    $destination = "$($env:badassLocation)$($global:moduleName).psm1"
 			
-			Write-Verbose "Downloading from $($env:badassPSM1Path) to $($destination)"
+			Write-Host "Downloading from $($env:badassPSM1Path) to $($destination)"
 			
 	        $client = (New-Object Net.WebClient)
 	       	$client.Proxy.Credentials = [System.Net.CredentialCache]::DefaultNetworkCredentials
@@ -100,7 +100,7 @@ Write-Verbose "Looking if the scripts path exists... (first run) $env:badassScri
 
 if(Test-Path $env:badassScriptsLocation -eq $false)
 {
-	Write-Verbose "First run. Updating... $env:badassScriptsLocation"
+	Write-Host "First run. Updating... $env:badassScriptsLocation"
 	Update-BadAss -Verbose
 }
 
