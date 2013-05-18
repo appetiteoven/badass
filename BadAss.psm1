@@ -72,10 +72,15 @@ function Update-BadAss
         }
 	
 	    #update the default profile for the user
+		Write-Host "Updating user profile `n $profilepath" -ForegroundColor Green
+		
 	    $profilepath = "$($env:badassScriptsLocation)Microsoft.PowerShell_profile.ps1"
 	    Copy-Item $profilepath -Destination $psmodulepath
 
-        write-host "Updating user profile `n $profilepath" -ForegroundColor Green
+        Write-Host "Reloading badass profile" -ForegroundColor Green
+		
+		#reload badass
+		Import-Module -Name $env:badassLocation -Force 
     }
 
 }

@@ -19,7 +19,6 @@ function Install-BadAss
 	Import-Module -Name $UserModulePath\$moduleName -Force 
 	
 	Write-Host "$($moduleName) is installed and ready to use. You bad ass you." -Foreground Green
-
 }
 
 Install-BadAss
