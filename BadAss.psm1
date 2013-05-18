@@ -94,7 +94,8 @@ function Update-BadAss
 }
 
 #if we dont have the scripts folder, we need to update since its the first install / run
-if(Test-Path $env:badassScriptsLocation -eq $false)
+Write-Verbose "Looking if the scripts path exists... (first run) $env:badassScriptsLocation"
+if(Test-Path $env:badassScriptsLocation)
 {
 	Update-BadAss -Verbose
 }
