@@ -11,12 +11,12 @@ function Install-BadAss
     		
 	New-Item $ModulePath -ItemType Directory -Force | out-null
 	
-	Write-Host "Downloading module from `n $($downloadurl)" 
+	$savepath = "$ModulePath\$($moduleName).psm1"
+	
+	Write-Host "Downloading module from `n $($downloadurl) `nto $savepath" 
 	
 	$client = (New-Object Net.WebClient)
 	$client.Proxy.Credentials = [System.Net.CredentialCache]::DefaultNetworkCredentials
-	
-	$savepath = "$ModulePath\$($moduleName).psm1"
 	
 	$client.DownloadFile($downloadurl, $savepath)
 	
