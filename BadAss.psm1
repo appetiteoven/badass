@@ -30,9 +30,11 @@ function Update-BadAss
 {	
     process
     {
+		$firstRun = $false
 		if (-not (Test-Path $env:badassScriptsLocation ))
 		{
 			New-Item ($env:badassScriptsLocation ) -ItemType Directory -Force | out-null
+			$firstRun = $true
 		}
 		#need to check if local version is latest than most recent commit
 		#need to store last commit 
@@ -89,12 +91,16 @@ function Update-BadAss
     }
 	end
 	{
-	 	Write-Host "Reloading badass profile" -ForegroundColor Green
-		
-		#reload badass
-		#where to put the profile
-		$badasspsmodulepath = "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell)\Modules\$($global:moduleName)"
-		Import-Module -Name $badasspsmodulepath -Force 
+	
+		if(-not $firstRun)
+		{
+	 		Write-Host "Reloading badass profile" -ForegroundColor Green
+				
+			#reload badass
+			#where to put the profile
+			$badasspsmodulepath = "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell)\Modules\$($global:moduleName)"
+			Import-Module -Name $badasspsmodulepath -Force 
+		}
 	}
 
 }
