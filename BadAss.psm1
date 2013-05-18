@@ -93,6 +93,12 @@ function Update-BadAss
 
 }
 
+#if we dont have the scripts folder, we need to update since its the first install / run
+if(Test-Path $env:badassScriptsLocation -eq $false)
+{
+	Update-BadAss -Verbose
+}
+
 #Update-BadAss -Verbose
 
 #load functions
