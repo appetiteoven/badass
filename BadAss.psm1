@@ -77,11 +77,15 @@ function Update-BadAss
 	    $profilepath = "$($env:badassScriptsLocation)Microsoft.PowerShell_profile.ps1"
 	    Copy-Item $profilepath -Destination $psmodulepath
 
-        Write-Host "Reloading badass profile" -ForegroundColor Green
+       
+    }
+	end
+	{
+	 	Write-Host "Reloading badass profile" -ForegroundColor Green
 		
 		#reload badass
 		Import-Module -Name $env:badassLocation -Force 
-    }
+	}
 
 }
 
