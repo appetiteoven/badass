@@ -1,4 +1,4 @@
-$VerbosePreference = "Continue"
+$VerbosePreference = "SilentlyContinue"
 $global:moduleName = "BadAss"
 
 #where do i find the root path?
@@ -9,6 +9,8 @@ $env:badassScriptPath = $env:badassSourceRootPath + "Scripts/"
 $env:badassPSM1Path = $env:badassSourceRootPath + "$($global:moduleName).psm1"
 					
 #names of scripts
+#can we automate this ? get it dynamically?
+#maybe look at the folder on github to decide the function names... so just adding one, adds it to the solution
 $global:BadAssScripts  = @("Set-Clipboard.ps1",
                            "Set-ConsoleSize.ps1",
                            "Microsoft.PowerShell_profile.ps1")
