@@ -1,8 +1,9 @@
 $VerbosePreference = "Continue"
 $global:moduleName = "BadAss"
+$global:version = "Release"
 
 #where do i find the root path?
-$env:badassSourceRootPath = "https://raw.github.com/appetiteoven/$($global:moduleName)/master/"
+$env:badassSourceRootPath = "https://raw.github.com/appetiteoven/$($global:moduleName)/$global:version/"
 
 $env:badassScriptPath = $env:badassSourceRootPath + "Scripts/"
 
