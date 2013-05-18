@@ -1,4 +1,4 @@
-$VerbosePreference = "SilentlyContinue"
+$VerbosePreference = "Continue"
 $global:moduleName = "BadAss"
 
 #where do i find the root path?
@@ -15,8 +15,8 @@ $global:BadAssScripts  = @("Set-Clipboard.ps1",
                            "Set-ConsoleSize.ps1",
                            "Microsoft.PowerShell_profile.ps1")
 #badass module location
-$env:badassLocation 		=  "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules)\BadAss\"
-$env:badassScriptsLocation 	=  "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules)\BadAss\Scripts\"
+$env:badassLocation 		=  "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules)\$($global:moduleName)\"
+$env:badassScriptsLocation 	=  "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules)\$($global:moduleName)\Scripts\"
 
 #where to put the profile
 $psmodulepath = "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell)\"
@@ -87,7 +87,7 @@ function Update-BadAss
 		
 		#reload badass
 		#where to put the profile
-		$badasspsmodulepath = "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell)\Modules\BadAss"
+		$badasspsmodulepath = "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell)\Modules\$($global:moduleName)"
 		Import-Module -Name $badasspsmodulepath -Force 
 	}
 
