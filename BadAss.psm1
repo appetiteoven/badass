@@ -17,6 +17,7 @@ $global:BadAssScripts  = @("Set-Clipboard.ps1",
 $env:badassLocation 		=  "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules)\$($global:moduleName)\"
 $env:badassScriptsLocation 	=  "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules)\$($global:moduleName)\Scripts\"
 $env:badassProfilePath 		= $env:badassLocation + "$($global:moduleName)_profile.ps1"	#BadAss_profile.ps1
+$env:UserPSPath = Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath "WindowsPowerShell\"
 
 #where to put the profile
 $psmodulepath = "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell)\"
@@ -83,7 +84,7 @@ function Update-BadAss
 	    #update the default profile for the user
 		Write-Verbose "Updating user profile `n $profilepath" 
 		
-		if(Test-Path $PROFILE.CurrentUserCurrentHost)
+		if(Test-Path $($PROFILE.CurrentUserCurrentHost))
 		{
 			$profilecontents = Get-Content $PROFILE.CurrentUserCurrentHost
 			if($profilecontents -contains ". $env:badassProfilePath")
@@ -104,9 +105,11 @@ function Update-BadAss
 			
 			#add a reference to load the badass profile in master profile
 			$profilecontents = ". $env:badassProfilePath"
-			$profilepath = $PROFILE.CurrentUserAllHosts
+			$profilepath = $env:UserPSPath + "Microsoft.PowerShell_profile.ps1"
 			#create the file
-			new-item -Path $profilepath -ItemType file -Force -Value $profilecontents
+			
+			$env:UserPSPath
+			new-item -Path $profilepath -ItemType file -Value $profilecontents -Force 
 
 			#old way to update the profile was keeping a copy. this will just create it one liner and its cleaner
 			#down side is hard coding the path
