@@ -87,11 +87,18 @@ function Update-BadAss
 		if(Test-Path $($PROFILE.CurrentUserCurrentHost))
 		{
 			$profilecontents = Get-Content $PROFILE.CurrentUserCurrentHost
-			if($profilecontents -contains ". $env:badassProfilePath")
+			
+			$found = $false
+			foreach($line in $profilecontents)
 			{
-				Write-Verbose "No update required. Already in profile." 
+				if($line -notcontains ". $env:badassProfilePath")
+				{
+					Write-Verbose "No update required. Already in profile." 
+					$found = $true
+				}
 			}
-			else
+			
+			if(-not $found) #not found, add it
 			{
 				$profilecontents += "`n . $env:badassProfilePath `n"
 				$profilepath = $env:UserPSPath + "Microsoft.PowerShell_profile.ps1"
