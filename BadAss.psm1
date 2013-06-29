@@ -104,7 +104,7 @@ function Update-BadAss
 				$profilecontents += "`n . $env:badassProfilePath `n"
 				
 				new-item -path $env:UserProfilePath -ItemType file -Value $profilecontents -Force  | Out-Null
-				Write-Verbose "Adding $($env:badassProfilePath) to end of existing profile" 
+				Write-Verbose "Adding $($env:badassProfilePath) to end of existing profile $profilecontents" 
 			}
 			
 		}
@@ -113,7 +113,7 @@ function Update-BadAss
 			Write-Verbose "PowerShell profile doesn't exist. Creating it and adding reference to module profile." 
 			
 			#add a reference to load the badass profile in master profile
-			$profilecontents = ". $env:badassProfilePath"
+			$profilecontents = "`n . $env:badassProfilePath `n"
 			
 			#create the default user file
 			new-item -Path $env:UserProfilePath  -ItemType file -Value $profilecontents -Force  | Out-Null
