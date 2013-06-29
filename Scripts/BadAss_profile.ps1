@@ -15,7 +15,9 @@ Import-Module BadAss
 
 Set-Alias -Name gh -Value get-help
 
-Write-Host "`nWelcome to BadAss v1.0 - $(get-date) `nGood day sir. You are a badass.`n " -ForegroundColor Cyan
+$LastWriteTime = $(Get-ChildItem -Path $env:badassLocation -Recurse | select LastWriteTime -First 1 | sort LastWriteTime -Descending).LastWriteTime
+
+Write-Host "`nwelcome to badass - $($LastWriteTime) last update to files. `ngood day sir. (get-date)`n " -ForegroundColor Cyan
 
 #region host customizations
 
