@@ -90,21 +90,30 @@ function Update-BadAss
 			$profilecontents = Get-Content $env:UserProfilePath 
 			$found = $false
 			
-			if($profilecontents | Select-String -Include ". $($env:badassProfilePath)")
+			foreach($line in $profilecontents)
 			{
-				Write-Verbose "No update required. Already in profile." 
+				if($line -contains ". $env:badassProfilePath")
+				{
+					Write-Verbose "No update required. Already in profile." 
+					$found = $true
+				}
 			}
-			else
+			
+			if(-not $found) #not found, add it to the end of the current profile
 			{
-				Add-Content -LiteralPath $env:UserProfilePath -Value "`n . $($env:badassProfilePath) `n "
+				$profilecontents += "`n . $env:badassProfilePath `n"
+				
+				new-item -path $env:UserProfilePath -ItemType file -Value $profilecontents -Force  | Out-Null
+				Write-Verbose "Adding $($env:badassProfilePath) to end of existing profile" 
 			}
+			
 		}
 		else	#doesn't exist, create one that has a link to the badassprofile
 		{
 			Write-Verbose "PowerShell profile doesn't exist. Creating it and adding reference to module profile." 
 			
 			#add a reference to load the badass profile in master profile
-			$profilecontents = "`n . $env:badassProfilePath `n "
+			$profilecontents = ". $env:badassProfilePath"
 			
 			#create the default user file
 			new-item -Path $env:UserProfilePath  -ItemType file -Value $profilecontents -Force  | Out-Null
@@ -138,7 +147,7 @@ function Remove-BadAss
 		if(Test-Path $env:UserProfilePath )
 		{
 			$profilecontents = $env:UserProfilePath 
-			if($profilecontents | Select-String -Include ". $env:badassProfilePath")
+			if($profilecontents -contains ". $env:badassProfilePath")
 			{
 				$newprofile = ""
 				foreach($line in $profilecontents)
@@ -189,4 +198,4 @@ function prompt
 
 
 
-update-badass 
+
