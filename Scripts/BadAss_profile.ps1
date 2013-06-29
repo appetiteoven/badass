@@ -13,6 +13,5 @@ if(Get-PSSnapin Microsoft.SharePoint.PowerShell -ErrorAction SilentlyContinue)
 
 Import-Module BadAss
 
-set-alias gh get-help
-
+Set-Alias -Name gh -Value get-help
 
