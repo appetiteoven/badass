@@ -154,7 +154,9 @@ function Remove-BadAss
 					}
 				}
 				
-				new-item -path $PROFILE.CurrentUserAllHosts -ItemType file -Force -Value $newprofile
+				$profilecontents = ". $env:badassProfilePath"
+				$profilepath = $env:UserPSPath + "Microsoft.PowerShell_profile.ps1"
+				new-item -path $profilepath -ItemType file -Force -Value $newprofile
 				Write-Verbose "Removing $($env:badassProfilePath) from existing profile" 
 			}
 			else
