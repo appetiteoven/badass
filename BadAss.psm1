@@ -133,6 +133,57 @@ function Update-BadAss
 
 }
 
+function Remove-BadAss
+{
+  process
+    {
+		#delete the files and folders
+	    Remove-Item -LiteralPath $env:badassLocation -Recurse
+		
+		if(Test-Path $($PROFILE.CurrentUserCurrentHost))
+		{
+			$profilecontents = Get-Content $PROFILE.CurrentUserCurrentHost
+			if($profilecontents -contains ". $env:badassProfilePath")
+			{
+				$newprofile = ""
+				foreach($line in $profilecontents)
+				{
+					if($line -notcontains ". $env:badassProfilePath")
+					{
+						$newprofile += $line
+					}
+				}
+				
+				new-item -path $PROFILE.CurrentUserAllHosts -ItemType file -Force -Value $newprofile
+				Write-Verbose "Removing $($env:badassProfilePath) from existing profile" 
+			}
+			else
+			{
+				Write-Verbose "No reference found in default profile. No update required for uninstall." 
+			}
+			
+		}
+		else	#doesn't exist, create one that has a link to the badassprofile
+		{
+			Write-Verbose "PowerShell profile doesn't exist. Creating it and adding reference to module profile." 
+			
+			#add a reference to load the badass profile in master profile
+			$profilecontents = ". $env:badassProfilePath"
+			$profilepath = $env:UserPSPath + "Microsoft.PowerShell_profile.ps1"
+			#create the file
+			
+			new-item -Path $profilepath -ItemType file -Value $profilecontents -Force 
+
+			#old way to update the profile was keeping a copy. this will just create it one liner and its cleaner
+			#down side is hard coding the path
+			#$profilepath = "$($env:badassScriptsLocation)Microsoft.PowerShell_profile.ps1"
+	    	#Copy-Item $profilepath -Destination $psmodulepath
+		}
+
+    }
+	
+}
+
 #if we dont have the scripts folder, we need to update since its the first install / run
 Write-Verbose "Looking if the scripts path exist... $env:badassScriptsLocation"
 
