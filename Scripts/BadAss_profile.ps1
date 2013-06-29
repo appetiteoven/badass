@@ -17,7 +17,7 @@ Set-Alias -Name gh -Value get-help
 
 $LastWriteTime = $(Get-ChildItem -Path $env:badassLocation -Recurse | select LastWriteTime -First 1 | sort LastWriteTime -Descending).LastWriteTime
 
-Write-Host "`nwelcome to badass - $($LastWriteTime) last update to files. `ngood day sir. (get-date)`n " -ForegroundColor Cyan
+Write-Host "`nwelcome to badass `n$($LastWriteTime) was last write time. `ngood day sir. $(get-date)`n " -ForegroundColor Cyan
 
 #region host customizations
 
@@ -42,7 +42,6 @@ Write-Host "`nwelcome to badass - $($LastWriteTime) last update to files. `ngood
 	if ($Host.Name -like '*ConsoleHost*')
 	{
 		Set-ConsoleSize -Resize Wide
-		
 		
 		function prompt
 		{
