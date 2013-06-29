@@ -17,7 +17,7 @@ Set-Alias -Name gh -Value get-help
 
 $LastWriteTime = $(Get-ChildItem -Path $env:badassLocation -Recurse | select LastWriteTime -First 1 | sort LastWriteTime -Descending).LastWriteTime
 
-Write-Host "`nwelcome to badass. good day sir. `n`n $($LastWriteTime) last write time for badass. `n$(get-date) is the current time`n " -ForegroundColor Cyan
+Write-Host "`nwelcome to badass. good day sir. `n`n$(get-date) is the current time`n$($LastWriteTime) last update for badass. `n " -ForegroundColor Cyan
 
 #region host customizations
 
