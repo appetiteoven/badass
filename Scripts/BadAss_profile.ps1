@@ -39,7 +39,7 @@ Write-Host "`nwelcome to badass - $($LastWriteTime) last update to files. `ngood
 		}
 	}
 
-	if ($Host.Name -like 'ConsoleHost')
+	if ($Host.Name -like '*ConsoleHost*')
 	{
 		Set-ConsoleSize -Resize Wide
 		
