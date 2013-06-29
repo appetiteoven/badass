@@ -83,14 +83,13 @@ function Update-BadAss
 	
 	    #update the default profile for the user
 		Write-Verbose "Updating user profile `n $profilepath" 
-		
-		if(Test-Path $($PROFILE.CurrentUserCurrentHost))
+		$profilepath = $env:UserPSPath + "Microsoft.PowerShell_profile.ps1"
+			
+		if(Test-Path $profilepath)
 		{
-			$profilepath = $env:UserPSPath + "Microsoft.PowerShell_profile.ps1"
-			
 			$profilecontents = Get-Content $profilepath
-			
 			$found = $false
+			
 			foreach($line in $profilecontents)
 			{
 				if($line -contains ". $env:badassProfilePath")
@@ -104,7 +103,7 @@ function Update-BadAss
 			{
 				$profilecontents += "`n . $env:badassProfilePath `n"
 				
-				new-item -path $profilepath -ItemType file -Force -Value $profilecontents  | Out-Null
+				new-item -path $profilepath -ItemType file -Value $profilecontents -Force  | Out-Null
 				Write-Verbose "Adding $($env:badassProfilePath) to end of existing profile" 
 			}
 			
@@ -115,10 +114,9 @@ function Update-BadAss
 			
 			#add a reference to load the badass profile in master profile
 			$profilecontents = ". $env:badassProfilePath"
-			$profilepath = $env:UserPSPath + "Microsoft.PowerShell_profile.ps1"
 			
 			#create the default user file
-			new-item -Path $profilepath -ItemType file -Value $profilecontents -Force   | Out-Null
+			new-item -Path $profilepath -ItemType file -Value $profilecontents -Force  | Out-Null
 
 		}
 
@@ -198,10 +196,8 @@ Write-Verbose "Looking if the scripts path exist... $env:badassScriptsLocation"
 if (-not (Test-Path $env:badassScriptsLocation ))
 {
 	Write-Host "First run. Updating... $env:badassScriptsLocation"
-	Update-BadAss -Verbose
+	Update-BadAss
 }
-
-#Update-BadAss -Verbose
 
 #load functions
 $global:BadAssScripts | ? {$_ -ne "BadAss_profile.ps1"} | foreach { . "$env:badassScriptsLocation$_" }
