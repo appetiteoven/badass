@@ -177,6 +177,9 @@ if (-not (Test-Path $env:badassScriptsLocation ))
 $global:BadAssScripts | ? {$_ -ne "BadAss_profile.ps1"} | foreach { . "$env:badassScriptsLocation$_" }
 
 
+$LastWriteTime = $(Get-ChildItem -Path $env:badassLocation -Recurse | select LastWriteTime -First 1 | sort LastWriteTime -Descending).LastWriteTime
+
+Write-Host "`nwelcome to badass. good day sir. `n`n$(get-date) is the current time`n$($LastWriteTime) last update for badass. `n " -ForegroundColor Cyan
 
 
 
