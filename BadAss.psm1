@@ -104,9 +104,9 @@ function Update-BadAss
 			
 			#add a reference to load the badass profile in master profile
 			$profilecontents = ". $env:badassProfilePath"
-			
+			$profilepath = $PROFILE.CurrentUserAllHosts
 			#create the file
-			new-item $PROFILE.CurrentUserAllHosts -ItemType file -Force -Value $profilecontents
+			new-item -Path $profilepath -ItemType file -Force -Value $profilecontents
 
 			#old way to update the profile was keeping a copy. this will just create it one liner and its cleaner
 			#down side is hard coding the path
