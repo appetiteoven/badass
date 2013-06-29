@@ -86,7 +86,9 @@ function Update-BadAss
 		
 		if(Test-Path $($PROFILE.CurrentUserCurrentHost))
 		{
-			$profilecontents = Get-Content $PROFILE.CurrentUserCurrentHost
+			$profilepath = $env:UserPSPath + "Microsoft.PowerShell_profile.ps1"
+			
+			$profilecontents = Get-Content $profilepath
 			
 			$found = $false
 			foreach($line in $profilecontents)
@@ -101,8 +103,7 @@ function Update-BadAss
 			if(-not $found) #not found, add it to the end of the current profile
 			{
 				$profilecontents += "`n . $env:badassProfilePath `n"
-				$profilepath = $env:UserPSPath + "Microsoft.PowerShell_profile.ps1"
-			
+				
 				new-item -path $profilepath -ItemType file -Force -Value $profilecontents  | Out-Null
 				Write-Verbose "Adding $($env:badassProfilePath) to end of existing profile" 
 			}
@@ -115,14 +116,10 @@ function Update-BadAss
 			#add a reference to load the badass profile in master profile
 			$profilecontents = ". $env:badassProfilePath"
 			$profilepath = $env:UserPSPath + "Microsoft.PowerShell_profile.ps1"
-			#create the file
 			
+			#create the default user file
 			new-item -Path $profilepath -ItemType file -Value $profilecontents -Force   | Out-Null
 
-			#old way to update the profile was keeping a copy. this will just create it one liner and its cleaner
-			#down side is hard coding the path
-			#$profilepath = "$($env:badassScriptsLocation)Microsoft.PowerShell_profile.ps1"
-	    	#Copy-Item $profilepath -Destination $psmodulepath
 		}
 
     }
