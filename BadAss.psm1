@@ -1,6 +1,6 @@
 $VerbosePreference = "Continue"
 $global:moduleName = "BadAss"
-$global:githubbranch = "Release"
+$global:githubbranch = "release" #case senstitive!
 
 #where do i find the root path?
 $env:badassSourceRootPath = "https://raw.github.com/appetiteoven/$($global:moduleName)/$($global:githubbranch)/"
@@ -102,6 +102,8 @@ function Update-BadAss
 		}
 		else	#doesn't exist, create one that has a link to the badassprofile
 		{
+			Write-Verbose "PowerShell profile doesn't exist. Creating it and adding reference to module profile." 
+			
 			#add a reference to load the badass profile in master profile
 			$profilecontents = ". $env:badassProfilePath"
 			

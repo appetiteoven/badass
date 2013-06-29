@@ -4,7 +4,7 @@
 function Install-BadAss
 {
     $moduleName = "BadAss"
-	$global:version = "Release"
+	$global:version = "release"
     $downloadurl = "https://raw.github.com/appetiteoven/$moduleName/$global:version/$($moduleName).psm1"
     	
     $UserModulePath = Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules
