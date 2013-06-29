@@ -90,11 +90,15 @@ function Update-BadAss
 			$profilecontents = Get-Content $env:UserProfilePath 
 			$found = $false
 			
-			if($profilecontents | Select-String -Include ". $env:badassProfilePath")
+			foreach($line in $profilecontents)
 			{
-				Write-Verbose "No update required. Already in profile." 
+				if($line -contains ". $env:badassProfilePath")
+				{
+					Write-Verbose "No update required. Already in profile." 
+					$found = $true
+				}
 			}
-			else
+			if(-not $found)
 			{
 				Add-Content -LiteralPath $env:UserProfilePath -Value "`n . $env:badassProfilePath `n "
 			}
