@@ -1,9 +1,9 @@
-$VerbosePreference = "SilentlyContinue"
+$VerbosePreference = "Continue"
 $global:moduleName = "BadAss"
-$global:version = "Release"
+$global:githubbranch = "Release"
 
 #where do i find the root path?
-$env:badassSourceRootPath = "https://raw.github.com/appetiteoven/$($global:moduleName)/$global:version/"
+$env:badassSourceRootPath = "https://raw.github.com/appetiteoven/$($global:moduleName)/$($global:githubbranch)/"
 
 $env:badassScriptPath = $env:badassSourceRootPath + "Scripts/"
 $env:badassProfilePath = $env:badassScriptPath + "$($global:moduleName)_profile.ps1"	#BadAss_profile.ps1
@@ -42,7 +42,7 @@ function Update-BadAss
     	
 	    foreach($script in $global:BadAssScripts)
 	    {
-		    Write-Verbose "Getting the latest version of $($script)" -ForegroundColor Green
+		    Write-Verbose "Getting the latest version of $($script)" 
 		
 		    #download url #"https://github.com/appetiteoven/badass/Scripts/Set-Clipboard.ps1"
 		    $downloadUrl = "$($env:badassScriptPath)$($script)"
@@ -83,19 +83,20 @@ function Update-BadAss
         }
 	
 	    #update the default profile for the user
-		Write-Verbose "Updating user profile `n $profilepath" -ForegroundColor Green
+		Write-Verbose "Updating user profile `n $profilepath" 
 		
 		if(Test-Path $PROFILE.CurrentUserCurrentHost)
 		{
-			
 			$profilecontents = Get-Content $PROFILE.CurrentUserCurrentHost
-			if($profilecontents -contains "*\BadAss\Scripts")
+			if($profilecontents -contains ". $env:badassProfilePath")
 			{
-				
+				Write-Verbose "No update required. Already in profile." 
 			}
 			else
 			{
-			
+				$profilecontents += "`n . $env:badassProfilePath `n"
+				new-item $PROFILE.CurrentUserAllHosts -ItemType file -Force -Value $profilecontents
+				Write-Verbose "Adding $($env:badassProfilePath) to end of existing profile" 
 			}
 			
 		}
@@ -113,7 +114,6 @@ function Update-BadAss
 	    	#Copy-Item $profilepath -Destination $psmodulepath
 		}
 
-       
     }
 	end
 	{
