@@ -146,12 +146,11 @@ function Remove-BadAss
 			$newprofile = ""
 			foreach($line in $profilecontents)
 			{
-				if($line -notlike ". $env:badassProfilePath")
+				if($line -notlike "* . $($env:badassProfilePath)*")
 				{
-					$newprofile += $line + "`n"
+					$newprofile += $line + "`n "
 				}
 			}
-			
 			new-item -path  $env:UserProfilePath -ItemType file -Force -Value $newprofile | Out-Null
 			Write-Verbose "Removing $($env:badassProfilePath) from existing profile" 
 			
@@ -166,7 +165,7 @@ function Remove-BadAss
 }
 
 #if we dont have the scripts folder, we need to update since its the first install / run
-Write-Verbose "Looking if the scripts path exist... $env:badassScriptsLocation"
+Write-Verbose "Checking if the scripts folder exist... $env:badassScriptsLocation"
 
 if (-not (Test-Path $env:badassScriptsLocation ))
 {
