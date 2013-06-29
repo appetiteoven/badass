@@ -141,23 +141,19 @@ function Remove-BadAss
 		
 		if(Test-Path $env:UserProfilePath )
 		{
-			$profilecontents = $env:UserProfilePath 
-			if($profilecontents | Select-String -Include ". $env:badassProfilePath")
+			$profilecontents = Get-Content $env:UserProfilePath 
+			
+			$newprofile = ""
+			foreach($line in $profilecontents)
 			{
-				$newprofile = ""
-				foreach($line in $profilecontents)
+				if($line -notlike ". $env:badassProfilePath")
 				{
-					if($line -notcontains ". $env:badassProfilePath")
-					{
-						$newprofile += $line + "`n"
-					}
+					$newprofile += $line + "`n"
 				}
-				
-				$profilecontents = ". $env:badassProfilePath"
-				
-				new-item -path $profilepath -ItemType file -Force -Value $newprofile | Out-Null
-				Write-Verbose "Removing $($env:badassProfilePath) from existing profile" 
 			}
+			
+			new-item -path  $env:UserProfilePath -ItemType file -Force -Value $newprofile | Out-Null
+			Write-Verbose "Removing $($env:badassProfilePath) from existing profile" 
 			
 		}
 		else	#doesn't exist, create one that has a link to the badassprofile
