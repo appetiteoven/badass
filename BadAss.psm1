@@ -1,4 +1,4 @@
-$VerbosePreference = "Continue"
+$VerbosePreference = "SilentlyContinue"
 $global:moduleName = "BadAss"
 $global:githubbranch = "release" #case senstitive!
 
