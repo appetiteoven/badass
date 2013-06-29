@@ -15,3 +15,35 @@ Import-Module BadAss
 
 Set-Alias -Name gh -Value get-help
 
+Write-Host "`nWelcome to BadAss v1.0 - $(get-date) `nGood day sir. You are a badass.`n " -ForegroundColor Cyan
+
+If ($Host.Name -match 'ise') 
+{
+	function prompt
+	{
+	    Write-Host ("badass " + $(get-location) + ">") -NoNewline
+	    return " "
+	}
+}
+
+if($Host.Name -match 'PowerGUIScriptEditorHost')
+{
+	function prompt
+	{
+	    Write-Host ("badass " + $(get-location) + ">") -nonewline
+	    return " "
+	}
+}
+
+if ($Host.Name -match 'ConsoleHost')
+{
+	Set-ConsoleSize -Resize Wide
+	
+	
+	function prompt
+	{
+	    Write-Host ("badass " + $(get-location) + ">") -nonewline -foregroundcolor white
+	    return " "
+	}
+}	
+	

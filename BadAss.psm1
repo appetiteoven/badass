@@ -176,15 +176,7 @@ if (-not (Test-Path $env:badassScriptsLocation ))
 #load functions
 $global:BadAssScripts | ? {$_ -ne "BadAss_profile.ps1"} | foreach { . "$env:badassScriptsLocation$_" }
 
-Write-Host "`nWelcome to BadAss v1.0 - $(get-date) `nGood day sir. You are a badass.`n " -ForegroundColor Cyan
 
-Set-ConsoleSize -Resize Wide
-
-function prompt
-{
-    Write-Host ("badass " + $(get-location) + ">") -nonewline -foregroundcolor white
-    return " "
-}
 
 
 
