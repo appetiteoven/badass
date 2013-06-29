@@ -2,11 +2,9 @@ $VerbosePreference = "Continue"
 $global:moduleName = "BadAss"
 $global:githubbranch = "release" #case senstitive!
 
-#where do i find the root path?
+#where do i find the root path on github?
 $env:badassSourceRootPath = "https://raw.github.com/appetiteoven/$($global:moduleName)/$($global:githubbranch)/"
-
 $env:badassScriptPath = $env:badassSourceRootPath + "Scripts/"
-$env:badassProfilePath = $env:badassScriptPath + "$($global:moduleName)_profile.ps1"	#BadAss_profile.ps1
 $env:badassPSM1Path = $env:badassSourceRootPath + "$($global:moduleName).psm1"
 					
 #names of scripts
@@ -18,6 +16,7 @@ $global:BadAssScripts  = @("Set-Clipboard.ps1",
 #badass module location
 $env:badassLocation 		=  "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules)\$($global:moduleName)\"
 $env:badassScriptsLocation 	=  "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules)\$($global:moduleName)\Scripts\"
+$env:badassProfilePath 		= $env:badassLocation + "$($global:moduleName)_profile.ps1"	#BadAss_profile.ps1
 
 #where to put the profile
 $psmodulepath = "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell)\"
@@ -44,11 +43,11 @@ function Update-BadAss
 	    {
 		    Write-Verbose "Getting the latest version of $($script)" 
 		
-		    #download url #"https://github.com/appetiteoven/badass/Scripts/Set-Clipboard.ps1"
+		    #download url #https://raw.github.com/appetiteoven/badass/release/Scripts/Set-Clipboard.ps1
 		    $downloadUrl = "$($env:badassScriptPath)$($script)"
 			
 		    #output location for module
-		    #C:\Users\sean\Documents\WindowsPowerShell\Modules\BadAssProfile
+		    #C:\Users\sean\Documents\WindowsPowerShell\Modules\BadAss
 		    $destination = "$($env:badassScriptsLocation)$($script)"
 			
 		    Write-Verbose " `tfrom url $downloadUrl `n`t to $destination"
@@ -67,7 +66,6 @@ function Update-BadAss
 	    }
 		try   
 		{
-		    #output location for module
 		    #C:\Users\sean\Documents\WindowsPowerShell\Modules\BadAss
 		    $destination = "$($env:badassLocation)$($global:moduleName).psm1"
 			
@@ -95,7 +93,7 @@ function Update-BadAss
 			else
 			{
 				$profilecontents += "`n . $env:badassProfilePath `n"
-				new-item $PROFILE.CurrentUserAllHosts -ItemType file -Force -Value $profilecontents
+				new-item -path $PROFILE.CurrentUserAllHosts -ItemType file -Force -Value $profilecontents
 				Write-Verbose "Adding $($env:badassProfilePath) to end of existing profile" 
 			}
 			
