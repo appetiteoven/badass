@@ -108,7 +108,6 @@ function Update-BadAss
 			$profilepath = $env:UserPSPath + "Microsoft.PowerShell_profile.ps1"
 			#create the file
 			
-			$env:UserPSPath
 			new-item -Path $profilepath -ItemType file -Value $profilecontents -Force 
 
 			#old way to update the profile was keeping a copy. this will just create it one liner and its cleaner
