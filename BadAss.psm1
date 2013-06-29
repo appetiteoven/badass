@@ -163,10 +163,6 @@ function Remove-BadAss
 				new-item -path $profilepath -ItemType file -Force -Value $newprofile | Out-Null
 				Write-Verbose "Removing $($env:badassProfilePath) from existing profile" 
 			}
-			else
-			{
-				Write-Verbose "No reference found in default profile. No update required for uninstall." 
-			}
 			
 		}
 		else	#doesn't exist, create one that has a link to the badassprofile
