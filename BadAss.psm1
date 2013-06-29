@@ -91,14 +91,14 @@ function Update-BadAss
 			$found = $false
 			foreach($line in $profilecontents)
 			{
-				if($line -notcontains ". $env:badassProfilePath")
+				if($line -contains ". $env:badassProfilePath")
 				{
 					Write-Verbose "No update required. Already in profile." 
 					$found = $true
 				}
 			}
 			
-			if(-not $found) #not found, add it
+			if(-not $found) #not found, add it to the end of the current profile
 			{
 				$profilecontents += "`n . $env:badassProfilePath `n"
 				$profilepath = $env:UserPSPath + "Microsoft.PowerShell_profile.ps1"
