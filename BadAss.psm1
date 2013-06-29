@@ -16,7 +16,7 @@ $global:BadAssScripts  = @("Set-Clipboard.ps1",
 #badass module location
 $env:badassLocation 		=  "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules)\$($global:moduleName)\"
 $env:badassScriptsLocation 	=  "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules)\$($global:moduleName)\Scripts\"
-$env:badassProfilePath 		= $env:badassLocation + "$($global:moduleName)_profile.ps1"	#BadAss_profile.ps1
+$env:badassProfilePath 		= $env:badassScriptsLocation + "$($global:moduleName)_profile.ps1"	#BadAss_profile.ps1
 $env:UserPSPath = Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath "WindowsPowerShell\"
 
 #where to put the profile
