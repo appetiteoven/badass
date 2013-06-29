@@ -17,7 +17,7 @@ $global:BadAssScripts  = @("Set-Clipboard.ps1",
 $env:badassLocation 		=  "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules)\$($global:moduleName)\"
 $env:badassScriptsLocation 	=  "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell\Modules)\$($global:moduleName)\Scripts\"
 $env:badassProfilePath 		= $env:badassScriptsLocation + "$($global:moduleName)_profile.ps1"	#BadAss_profile.ps1
-$env:UserPSPath = Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath "WindowsPowerShell\"
+$env:UserProfilePath 		= Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath "WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
 
 #where to put the profile
 $psmodulepath = "$(Join-Path -Path ([Environment]::GetFolderPath('MyDocuments')) -ChildPath WindowsPowerShell)\"
@@ -82,12 +82,12 @@ function Update-BadAss
         }
 	
 	    #update the default profile for the user
-		Write-Verbose "Updating user profile `n $profilepath" 
-		$profilepath = $env:UserPSPath + "Microsoft.PowerShell_profile.ps1"
+		Write-Verbose "Updating user profile `n $env:UserProfilePath " 
+	
 			
-		if(Test-Path $profilepath)
+		if(Test-Path $env:UserProfilePath )
 		{
-			$profilecontents = Get-Content $profilepath
+			$profilecontents = Get-Content $env:UserProfilePath 
 			$found = $false
 			
 			foreach($line in $profilecontents)
@@ -103,7 +103,7 @@ function Update-BadAss
 			{
 				$profilecontents += "`n . $env:badassProfilePath `n"
 				
-				new-item -path $profilepath -ItemType file -Value $profilecontents -Force  | Out-Null
+				new-item -path $env:UserProfilePath -ItemType file -Value $profilecontents -Force  | Out-Null
 				Write-Verbose "Adding $($env:badassProfilePath) to end of existing profile" 
 			}
 			
@@ -116,7 +116,7 @@ function Update-BadAss
 			$profilecontents = ". $env:badassProfilePath"
 			
 			#create the default user file
-			new-item -Path $profilepath -ItemType file -Value $profilecontents -Force  | Out-Null
+			new-item -Path $env:UserProfilePath  -ItemType file -Value $profilecontents -Force  | Out-Null
 
 		}
 
@@ -144,9 +144,9 @@ function Remove-BadAss
 		#delete the files and folders
 	    Remove-Item -LiteralPath $env:badassLocation -Recurse
 		
-		if(Test-Path $($PROFILE.CurrentUserCurrentHost))
+		if(Test-Path $env:UserProfilePath )
 		{
-			$profilecontents = Get-Content $PROFILE.CurrentUserCurrentHost
+			$profilecontents = $env:UserProfilePath 
 			if($profilecontents -contains ". $env:badassProfilePath")
 			{
 				$newprofile = ""
@@ -159,7 +159,7 @@ function Remove-BadAss
 				}
 				
 				$profilecontents = ". $env:badassProfilePath"
-				$profilepath = $env:UserPSPath + "Microsoft.PowerShell_profile.ps1"
+				
 				new-item -path $profilepath -ItemType file -Force -Value $newprofile | Out-Null
 				Write-Verbose "Removing $($env:badassProfilePath) from existing profile" 
 			}
@@ -171,19 +171,7 @@ function Remove-BadAss
 		}
 		else	#doesn't exist, create one that has a link to the badassprofile
 		{
-			Write-Verbose "PowerShell profile doesn't exist. Creating it and adding reference to module profile." 
-			
-			#add a reference to load the badass profile in master profile
-			$profilecontents = ". $env:badassProfilePath"
-			$profilepath = $env:UserPSPath + "Microsoft.PowerShell_profile.ps1"
-			#create the file
-			
-			new-item -Path $profilepath -ItemType file -Value $profilecontents -Force  | Out-Null
-
-			#old way to update the profile was keeping a copy. this will just create it one liner and its cleaner
-			#down side is hard coding the path
-			#$profilepath = "$($env:badassScriptsLocation)Microsoft.PowerShell_profile.ps1"
-	    	#Copy-Item $profilepath -Destination $psmodulepath
+			Write-Verbose "Default user PowerShell profile doesn't exist." 
 		}
 
     }
@@ -195,7 +183,7 @@ Write-Verbose "Looking if the scripts path exist... $env:badassScriptsLocation"
 
 if (-not (Test-Path $env:badassScriptsLocation ))
 {
-	Write-Host "First run. Updating... $env:badassScriptsLocation"
+	Write-Verbose "First run. Updating... $env:badassScriptsLocation"
 	Update-BadAss
 }
 
