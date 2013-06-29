@@ -154,7 +154,7 @@ function Remove-BadAss
 				{
 					if($line -notcontains ". $env:badassProfilePath")
 					{
-						$newprofile += $line
+						$newprofile += $line + "`n"
 					}
 				}
 				
