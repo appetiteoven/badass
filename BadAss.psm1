@@ -94,7 +94,9 @@ function Update-BadAss
 			else
 			{
 				$profilecontents += "`n . $env:badassProfilePath `n"
-				new-item -path $PROFILE.CurrentUserAllHosts -ItemType file -Force -Value $profilecontents
+				$profilepath = $env:UserPSPath + "Microsoft.PowerShell_profile.ps1"
+			
+				new-item -path $profilepath -ItemType file -Force -Value $profilecontents  | Out-Null
 				Write-Verbose "Adding $($env:badassProfilePath) to end of existing profile" 
 			}
 			
@@ -108,7 +110,7 @@ function Update-BadAss
 			$profilepath = $env:UserPSPath + "Microsoft.PowerShell_profile.ps1"
 			#create the file
 			
-			new-item -Path $profilepath -ItemType file -Value $profilecontents -Force 
+			new-item -Path $profilepath -ItemType file -Value $profilecontents -Force   | Out-Null
 
 			#old way to update the profile was keeping a copy. this will just create it one liner and its cleaner
 			#down side is hard coding the path
@@ -156,7 +158,7 @@ function Remove-BadAss
 				
 				$profilecontents = ". $env:badassProfilePath"
 				$profilepath = $env:UserPSPath + "Microsoft.PowerShell_profile.ps1"
-				new-item -path $profilepath -ItemType file -Force -Value $newprofile
+				new-item -path $profilepath -ItemType file -Force -Value $newprofile | Out-Null
 				Write-Verbose "Removing $($env:badassProfilePath) from existing profile" 
 			}
 			else
@@ -174,7 +176,7 @@ function Remove-BadAss
 			$profilepath = $env:UserPSPath + "Microsoft.PowerShell_profile.ps1"
 			#create the file
 			
-			new-item -Path $profilepath -ItemType file -Value $profilecontents -Force 
+			new-item -Path $profilepath -ItemType file -Value $profilecontents -Force  | Out-Null
 
 			#old way to update the profile was keeping a copy. this will just create it one liner and its cleaner
 			#down side is hard coding the path
