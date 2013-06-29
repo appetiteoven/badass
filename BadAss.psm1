@@ -92,7 +92,7 @@ function Update-BadAss
 			
 			foreach($line in $profilecontents)
 			{
-				if($line -contains ". $env:badassProfilePath")
+				if($line -contains "`n . $env:badassProfilePath `n ")
 				{
 					Write-Verbose "No update required. Already in profile." 
 					$found = $true
