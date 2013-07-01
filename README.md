@@ -12,7 +12,8 @@ features
 
 install
 ========
-(new-object Net.WebClient).DownloadString("https://raw.github.com/appetiteoven/badass/master/Install-BadAss.ps1") | iex
+$branch = "release"
+(new-object Net.WebClient).DownloadString("https://raw.github.com/appetiteoven/badass/$($branch)/Install-BadAss.ps1") | iex
 
 module
 ========
