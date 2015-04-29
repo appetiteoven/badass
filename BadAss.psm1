@@ -119,7 +119,7 @@ if (-not (Test-Path $env:badassScriptsLocation ))
 #load functions
 $global:BadAssScripts | ? {$_ -ne "Microsoft.PowerShell_profile.ps1"} | foreach { . "$env:badassScriptsLocation$_" }
 
-Write-Host "`nWelcome to BadAss v1.0 - $(get-date) `nGood day sir. You are a badass.`n " -ForegroundColor Cyan
+Write-Host "`nWelcome to BadAss v1.0 - $(get-date) `nGood day sir. You are a badass. Remember that, little boy.`n " -ForegroundColor Cyan
 
 Set-ConsoleSize -Resize Wide
 
